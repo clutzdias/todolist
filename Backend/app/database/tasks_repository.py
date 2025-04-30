@@ -40,7 +40,23 @@ def create_task(task: Task):
             'completed': task.completed
         }
     )
+    
     conn.commit()
     task.id = cursor.lastrowid
+    logging.info(f"Task created. Id: {task.id}")
     conn.close()
     return task
+
+def get_task(task_id: int) -> Task:
+    conn = get_db_connection()
+    task = conn.execute(
+        'SELECT * FROM tasks WHERE id = ?',
+        (task_id,)
+    ).fetchone()
+    conn.close()
+
+    if task is None:
+        logging.warning(f"Task with id {task_id} not found.")
+        return None
+
+    return Task(task['id'], task['name'], task['description'], task['completed'])
