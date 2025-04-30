@@ -1,18 +1,13 @@
 
+from dataclasses import dataclass
 from typing import Optional
 
 
+@dataclass
 class Task:
-    id: Optional[int]
     name: str
-    description: str
-    completed: bool
+    id: Optional[int] = None
+    description: Optional[str] = None
+    completed: bool = False
 
-    def __init__(self, id: int, name: str, description: str, completed: bool):
-        self.id = id
-        self.name = name
-        self.description = description
-        self.completed = completed
-
-    def __repr__(self):
-        return f"Task(id={self.id}, name='{self.name}', description='{self.description}', completed='{self.completed}')"
+    

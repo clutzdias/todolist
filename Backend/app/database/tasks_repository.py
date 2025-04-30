@@ -47,11 +47,12 @@ def create_task(task: Task):
     conn.close()
     return task
 
+
 def get_task(task_id: int) -> Task:
     conn = get_db_connection()
     task = conn.execute(
-        'SELECT * FROM tasks WHERE id = ?',
-        (task_id,)
+        'SELECT * FROM tasks WHERE id = :id',
+        {'id': task_id}
     ).fetchone()
     conn.close()
 
@@ -59,4 +60,44 @@ def get_task(task_id: int) -> Task:
         logging.warning(f"Task with id {task_id} not found.")
         return None
 
-    return Task(task['id'], task['name'], task['description'], task['completed'])
+    return Task(**task)
+
+
+def get_tasks(only_completed: bool) -> list[Task]:
+    conn = get_db_connection()
+
+    sql = 'SELECT * FROM tasks'
+
+    if only_completed:
+        sql = 'SELECT * FROM tasks WHERE completed = true'
+    
+    tasks = conn.execute(sql).fetchall()
+    conn.close()
+
+    return [Task(**task) for task in tasks]
+
+
+def update_task(task: Task):
+    conn = get_db_connection()
+    conn.execute(
+        'UPDATE tasks SET name = :name, description = :description, completed = :completed WHERE id = :id',
+        {
+            'name': task.name,
+            'description': task.description,
+            'completed': task.completed,
+            'id': task.id
+        }
+    )
+    conn.commit()
+    conn.close()
+
+    logging.info(f"Task updated. Id: {task.id}")
+
+
+def delete_task(task_id: int):
+    conn = get_db_connection()
+    conn.execute('DELETE FROM tasks WHERE id = :id', {'id': task_id})
+    conn.commit()
+    conn.close()
+
+    logging.info(f"Task deleted. Id: {task_id}")
