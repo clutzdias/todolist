@@ -1,29 +1,16 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint
+from task_view import TaskView
 
+tasks_bp = Blueprint('tasks', __name__, url_prefix='/tasks')
 
-tasks_bp = Blueprint('tasks', __name__)
+task_view = TaskView()
 
+tasks_bp.route('/', methods=['GET'])(task_view.get_tasks)
 
-@tasks_bp.route('/tasks', methods=['GET'])
-def get_tasks():
-    pass
+tasks_bp.route('/', methods=['POST'])(task_view.create_task)
 
+tasks_bp.route('/<int:task_id>', methods=['GET'])(task_view.get_task)
+ 
+tasks_bp.route('/<int:task_id>', methods=['PUT'])(task_view.update_task)
 
-@tasks_bp.route('/tasks', methods=['POST'])
-def create_task():
-    pass
-
-
-@tasks_bp.route('/tasks/<int:task_id>', methods=['GET'])
-def get_task(task_id):
-    pass
-
-
-@tasks_bp.route('/tasks/<int:task_id>', methods=['PUT'])
-def update_task(task_id):
-    pass
-
-
-@tasks_bp.route('/tasks/<int:task_id>', methods=['DELETE'])
-def delete_task(task_id):
-    pass
+tasks_bp.route('/<int:task_id>', methods=['DELETE'])(task_view.delete_task)
