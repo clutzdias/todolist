@@ -1,5 +1,6 @@
 from werkzeug.exceptions import HTTPException
 
+
 class CreateTaskException(HTTPException):
     code = 403
     description = "Failed to create task."
@@ -23,3 +24,8 @@ class TaskUpdateException(HTTPException):
 class TaskDeleteException(HTTPException):
     code = 403
     description = "Failed to delete task."
+
+
+class GetTasksException(HTTPException):
+    code = 500
+    description = "Failed to get tasks."
