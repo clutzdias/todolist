@@ -5,7 +5,7 @@ from typing import Optional
 
 @dataclass
 class Task:
-    name: str
+    title: str
     id: Optional[int] = None
     description: Optional[str] = None
     completed: bool = False

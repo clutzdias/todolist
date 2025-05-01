@@ -174,3 +174,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3

@@ -1,10 +1,14 @@
 from flask import Flask
 
+from .database.task_repository import init_db
+
 def create_app():
     app = Flask(__name__)
     #app.config.from_object('config')
     
-    from . import routes
-    app.register_blueprint(routes.tasks_bp, url_prefix='/api')
+    from .routes import tasks_bp
+    app.register_blueprint(tasks_bp)
+
+    init_db(app)
     
     return app

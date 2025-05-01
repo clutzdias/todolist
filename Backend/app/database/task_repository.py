@@ -15,7 +15,7 @@ DB_PATH = os.path.join(os.path.dirname(__file__), DB_NAME)
 def init_db(app):
     if not os.path.exists(DB_PATH):
         conn = sqlite3.connect(DB_PATH)
-        with app.open_resource('schema.sql') as f:
+        with app.open_resource('database/schema.sql') as f:
             conn.executescript(f.read().decode('utf8'))
 
         logging.info(f"Database {DB_NAME} created.")
@@ -31,13 +31,13 @@ def get_db_connection():
 
 class TaskRepository:
 
-    def create_task(task: Task):
+    def create_task(self, task: Task):
         conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute(
-            'INSERT INTO tasks (name, description, completed) VALUES (:name, :description, :completed)',
+            'INSERT INTO tasks (title, description, completed) VALUES (:title, :description, :completed)',
             {
-                'name': task.name,
+                'title': task.title,
                 'description': task.description,
                 'completed': task.completed
             }
@@ -50,7 +50,7 @@ class TaskRepository:
         return task
 
 
-    def get_task(task_id: int) -> Task:
+    def get_task(self, task_id: int) -> Task:
         conn = get_db_connection()
         task = conn.execute(
             'SELECT * FROM tasks WHERE id = :id',
@@ -64,22 +64,22 @@ class TaskRepository:
 
         return Task(**task)
     
-    def get_task_by_name(name: str) -> Task:
+    def get_task_by_title(self, title: str) -> Task:
         conn = get_db_connection()
         task = conn.execute(
-            'SELECT * FROM tasks WHERE name = :name',
-            {'name': name}
+            'SELECT * FROM tasks WHERE title = :title',
+            {'title': title}
         ).fetchone()
         conn.close()
 
         if task is None:
-            logging.info(f"Task with name {name} not found.")
+            logging.info(f"Task with title {title} not found.")
             return None
 
         return Task(**task)
 
 
-    def get_tasks(only_completed: bool) -> list[Task]:
+    def get_tasks(self, only_completed: bool) -> list[Task]:
         conn = get_db_connection()
 
         sql = 'SELECT * FROM tasks'
@@ -93,12 +93,12 @@ class TaskRepository:
         return [Task(**task) for task in tasks]
 
 
-    def update_task(task: Task):
+    def update_task(self, task: Task):
         conn = get_db_connection()
         conn.execute(
-            'UPDATE tasks SET name = :name, description = :description, completed = :completed WHERE id = :id',
+            'UPDATE tasks SET title = :title, description = :description, completed = :completed WHERE id = :id',
             {
-                'name': task.name,
+                'title': task.title,
                 'description': task.description,
                 'completed': task.completed,
                 'id': task.id
@@ -110,7 +110,7 @@ class TaskRepository:
         logging.info(f"Task updated. Id: {task.id}")
 
 
-    def delete_task(task_id: int):
+    def delete_task(self, task_id: int):
         conn = get_db_connection()
         conn.execute('DELETE FROM tasks WHERE id = :id', {'id': task_id})
         conn.commit()
