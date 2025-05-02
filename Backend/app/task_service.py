@@ -1,3 +1,5 @@
+
+from werkzeug.exceptions import HTTPException
 from .exceptions import (
     CreateTaskException,
     GetTasksException, 
@@ -21,8 +23,10 @@ class TaskService:
                 raise TaskAlreadyExistsException(description=f"Task with title {task.title} already exists.")
             return self.repository.create_task(task)
         except Exception as e:
+            if isinstance(e, TaskAlreadyExistsException):
+                raise e
             raise CreateTaskException(description=f"Failed to create task: {str(e)}") from e
-    
+        
 
     def get_task(self, task_id: int) -> Task:
         try:
