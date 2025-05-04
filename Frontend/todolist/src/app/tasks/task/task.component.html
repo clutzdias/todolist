@@ -1,3 +1,22 @@
-<p>
-  task works!
-</p>
+<div>
+  <h3>Task Details</h3>
+  <form [formGroup]="taskForm" (ngSubmit)="saveTask()">
+    <div>
+      <label for="title">Title:</label>
+      <input id="title" formControlName="title" />
+    </div>
+    <div *ngIf="title?.invalid && (title?.dirty || title?.touched)" class="warning">
+      <div *ngIf="title?.errors?.['required']">
+        You must enter a title
+      </div>
+    </div>
+    <div>
+      <label for="description">Description:</label>
+      <textarea id="description" formControlName="description"></textarea>
+    </div>
+    <div>
+      <label for="completed">Completed:</label>
+      <checkbox id="completed" formControlName="completed" />
+    </div>
+    <button type="submit">Save Task</button>
+</div>
