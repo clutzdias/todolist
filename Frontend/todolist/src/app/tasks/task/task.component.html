@@ -1,22 +1,47 @@
-<div>
-  <h3>Task Details</h3>
-  <form [formGroup]="taskForm" (ngSubmit)="saveTask()">
+<div class="max-w-xl mx-auto p-4 bg-white rounded-xl shadow-md">
+  <h3 class="text-xl font-semibold mb-4">Task Details</h3>
+
+  <form [formGroup]="formGroup" (ngSubmit)="saveTask()" class="space-y-4">
     <div>
-      <label for="title">Title:</label>
-      <input id="title" formControlName="title" />
-    </div>
-    <div *ngIf="title?.invalid && (title?.dirty || title?.touched)" class="warning">
-      <div *ngIf="title?.errors?.['required']">
-        You must enter a title
+      <label for="title" class="block text-sm font-medium text-gray-700">Title:</label>
+      <input
+        id="title"
+        formControlName="title"
+        type="text"
+        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+      />
+      <div *ngIf="title && title.invalid && (title.dirty || title.touched)" class="text-sm text-red-600 mt-1">
+        <div *ngIf="title.errors && title.errors.required">You must enter a title</div>
       </div>
     </div>
+
     <div>
-      <label for="description">Description:</label>
-      <textarea id="description" formControlName="description"></textarea>
+      <label for="description" class="block text-sm font-medium text-gray-700">Description:</label>
+      <textarea
+        id="description"
+        formControlName="description"
+        rows="4"
+        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+      ></textarea>
     </div>
-    <div>
-      <label for="completed">Completed:</label>
-      <checkbox id="completed" formControlName="completed" />
+
+    <div class="flex items-center space-x-2">
+      <input
+        type="checkbox"
+        id="completed"
+        formControlName="completed"
+        class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+      />
+      <label for="completed" class="text-sm text-gray-700">Completed</label>
     </div>
-    <button type="submit">Save Task</button>
+
+    <button
+      type="submit"
+      [disabled]="formGroup.invalid"
+      class="w-full bg-blue-600 text-white py-2 px-4 rounded-md transition-colors
+            hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+    >
+      Save Task
+    </button>
+  </form>
 </div>

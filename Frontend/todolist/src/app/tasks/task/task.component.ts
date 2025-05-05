@@ -39,13 +39,11 @@ export class TaskComponent implements OnInit {
   }
 
   saveTask() {
-
-
     if (this.createMode) {
       this.taskService.createTask(this.formGroup.value)
         .subscribe(() => this.goBack());
     } else {
-      const formData = {id: this.task?.id, ...this.formGroup.value};  
+      const formData = {id: this.task.id, ...this.formGroup.value};  
       this.taskService.updateTask(formData)
         .subscribe(() => this.goBack());
     }

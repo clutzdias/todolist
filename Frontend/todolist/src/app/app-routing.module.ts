@@ -15,11 +15,11 @@ const routes: Routes = [
   },
   {
     path: 'task',
-    loadChildren: '.tasks/task/task.module#TaskModule' 
+    loadChildren: './tasks/task/task.module#TaskModule' 
   },
   {
     path: 'task/:id',
-    loadChildren: '.tasks/task/task.module#TaskModule'
+    loadChildren: './tasks/task/task.module#TaskModule'
 }
 ];
 

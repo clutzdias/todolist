@@ -7,8 +7,7 @@ import { Task } from "../interfaces/task";
     providedIn: 'root'
 })
 export class TaskService {
-    private baseURL: string = 'http://localhost:5000';
-    private tasksURL: string = `${this.baseURL}/tasks`;
+    private tasksURL: string = '/tasks';
 
 
     constructor(private http: HttpClient) {}

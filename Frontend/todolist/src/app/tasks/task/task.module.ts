@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { TaskService } from 'src/app/services/taskservice';
 import { TaskComponent } from './task.component';
@@ -26,7 +26,6 @@ const routes: Routes = [
     ],
     imports: [
         CommonModule,
-        FormsModule,
         ReactiveFormsModule,
         RouterModule.forChild(routes)
     ],
