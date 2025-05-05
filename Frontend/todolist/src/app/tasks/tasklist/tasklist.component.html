@@ -1,25 +1,20 @@
-<div class="space-y-2">
-  <div *ngFor="let task of tasks || []" class="flex items-center justify-between p-4 mb-2 rounded-lg shadow bg-gray-100">
-    <!-- Task Info -->
-    <div class="flex flex-col">
-      <div class="text-base font-semibold text-gray-800">{{ task.title }}</div>
-      <div class="text-sm text-gray-600">{{ task.description }}</div>
+<div class="tasklist-wrapper">
+  <div *ngFor="let task of tasks || []" class="task-card">
+    <div class="task-info">
+      <div class="task-title">{{ task.title }}</div>
+      <div class="task-desc">{{ task.description }}</div>
     </div>
 
-    <!-- Actions -->
-    <div class="flex items-center gap-3 ml-4">
-      <!-- Checkbox -->
+    <div class="task-actions">
       <mat-checkbox
         [checked]="task.completed"
         (change)="onCompletedChange(task)">
       </mat-checkbox>
 
-      <!-- Edit button -->
       <button mat-icon-button color="primary" (click)="editTask(task.id)">
         <mat-icon>edit</mat-icon>
       </button>
 
-      <!-- Delete button -->
       <button mat-icon-button color="warn" (click)="deleteTask(task.id)">
         <mat-icon>delete</mat-icon>
       </button>

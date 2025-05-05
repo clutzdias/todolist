@@ -48,7 +48,7 @@ export class TaskComponent implements OnInit {
         .subscribe(() => this.goBack());
     }
   }
-
+ 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
@@ -56,7 +56,7 @@ export class TaskComponent implements OnInit {
       this.createMode = false;
     } else {
       this.task = undefined;
-    }
+    } 
   }
 
 }

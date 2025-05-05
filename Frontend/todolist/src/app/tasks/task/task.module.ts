@@ -10,14 +10,7 @@ const routes: Routes = [
         path: '',
         component: TaskComponent
     },
-    {
-        path: 'task',
-        loadChildren: '../task/task.module#TaskModule' 
-    },
-    {
-        path: 'task/:id',
-        loadChildren: '../task/task.module#TaskModule'
-    }
+
 ]
 
 @NgModule({
