@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { Task } from 'src/app/interfaces/task';
 import { TaskService } from 'src/app/services/taskservice';
 
@@ -31,15 +30,29 @@ export class TasklistComponent implements OnInit {
   }
 
   onCompletedChange(task: Task) {
-    const updatedTask: Task = {...task, completed: !task.completed};
-    this.taskService.updateTask(updatedTask).subscribe(() => {
-      task.completed = updatedTask.completed; 
+    const originalValue = task.completed;
+    task.completed = !task.completed;
+
+    const updatedTask: Task = { ...task };
+
+    this.taskService.updateTask(updatedTask).subscribe({
+      next: () => {
+      
+      },
+      error: () => {
+        task.completed = originalValue;
+      }
     });
     
   }
 
 
   ngOnInit() {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd && this.router.url === '/home') {
+        this.getTasks(); // re-busca as tarefas ao voltar
+      }
+    });
     this.getTasks();
   }
 

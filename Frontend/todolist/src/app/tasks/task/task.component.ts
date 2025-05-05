@@ -30,8 +30,19 @@ export class TaskComponent implements OnInit {
   }
 
   getTask(id: string): void {
+    let completed = false
     this.taskService.getTask(+id)
-      .subscribe(task => this.task = task);
+      .subscribe(task => {
+        this.task = task;
+        if (Number(task.completed) === 1) completed = true;
+        if (this.formGroup){
+          this.formGroup.patchValue({
+            title: task.title,
+            description: task.description,
+            completed: completed
+        })}
+
+      });
   }
 
   goBack() {

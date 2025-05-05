@@ -7,8 +7,11 @@
 
     <div class="task-actions">
       <mat-checkbox
+        labelPosition="before"
+        class="size-checkbox checkbox-style"
         [checked]="task.completed"
         (change)="onCompletedChange(task)">
+        Completed
       </mat-checkbox>
 
       <button mat-icon-button color="primary" (click)="editTask(task.id)">
