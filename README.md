@@ -14,16 +14,16 @@ Simple To-Do List in Python/Angular
 
 ### Run the folowing commands to load the server:
 
-- cd Backend
-- pip install -r requirements.txt
-- For Windows: python run.py
-- For Linux: python3.run.py
+- `cd Backend`
+- `pip install -r requirements.txt`
+- `For Windows: python run.py`
+- `For Linux: python3.run.py`
 
 The backend server will be available at http://localhost:5000
 
 ### To run the tests:
 
-- pytest .
+- `pytest .`
 
 ## Frontend
 
@@ -33,9 +33,9 @@ The backend server will be available at http://localhost:5000
 
 ### Run the folowing commands to load the server:
 
-- cd Frontend/todolist
-- npm install
-- ng serve --proxy-config proxy.conf.json
+- `cd Frontend/todolist`
+- `npm install`
+- `ng serve --proxy-config proxy.conf.json`
 
 The frontend server will be available at http://localhost:4200
 
