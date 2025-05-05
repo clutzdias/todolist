@@ -17,7 +17,7 @@ Simple To-Do List in Python/Angular
 - `cd Backend`
 - `pip install -r requirements.txt`
 - `For Windows: python run.py`
-- `For Linux: python3.run.py`
+- `For Linux: python3 run.py`
 
 The backend server will be available at http://localhost:5000
 
